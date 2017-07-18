@@ -1,8 +1,11 @@
 var imageSelector = '[data-image-role="target"]';
 var titleSelector = '[data-image-role="title"]';
 var thumbSelector = '[data-image-role="trigger"]';
-var detailImage = document.querySelector(imageSelector);
-var detailText = document.querySelector(titleSelector);
+
+var thumbsNodeList;
+var thumbsArray;
+var detailImage;
+var detailText;
 
 var thumbsArray2 = [
         { href: "img/otter1.jpg", 
@@ -28,20 +31,23 @@ var thumbsArray2 = [
           alt: "Lesley the Otter",
           text: "Lesley"
         },
+
         { href: "img/otter5.jpg",
           title: "To Love Somebody",
           alt: "Barbara the Otter",
           text: "Barbara"
         }
     ]
-// var listItems = document.querySelectorAll("thumbnail-item");
-// var listItemsArray = getArray(listItems);
+
+var unorderedList = document.querySelector('.thumbnail-list');
+
 
 function createListItem (array) {
     array.forEach(function (thumb) {
-        var i = 0;
         var thumbList = document.createElement('li');
         thumbList.setAttribute('class', "thumbnail-item");
+        unorderedList.appendChild(thumbList);
+
         var thumbLink = document.createElement('a');
         thumbLink.setAttribute('href', thumb.href);
         thumbLink.setAttribute('data-image-role', "trigger");
@@ -53,15 +59,56 @@ function createListItem (array) {
         thumbImage.setAttribute('class', "thumbnail-image");
         thumbImage.setAttribute('src', thumb.href);
         thumbImage.setAttribute('alt', thumb.alt);
-        thumbList.appendChild(thumbImage);
+        thumbLink.appendChild(thumbImage);
 
         var thumbSpan = document.createElement('span'); 
         thumbSpan.setAttribute('class', "thumbnail-title");
         thumbSpan.textContent = thumb.text;
-        thumbList.appendChild(thumbSpan);
-        ul.appendChild(thumbList);
-        i++;
+        thumbLink.appendChild(thumbSpan);
     })
-})
-      
+}
 
+createListItem(thumbsArray2);
+
+thumbsNodeList = document.querySelectorAll('a');
+thumbsArray= getArray(thumbsNodeList);
+detailImage = document.querySelector(imageSelector);
+detailText = document.querySelector(titleSelector);
+
+function getArray(nodeList) {
+    return [].slice.call(nodeList);
+}
+
+function setImage(thumb) {
+    detailImage.setAttribute('src', thumb.getAttribute('data-image-url'));
+}
+
+function setCaption(thumb) {
+    detailText.textContent = thumb.getAttribute('data-image-title');
+}
+
+
+function addListener(array) {
+    array.forEach(function(thumb) {
+        thumb.addEventListener("click", function(event) {
+            event.preventDefault();
+            setImage(thumb);
+            setCaption(thumb);
+        });
+    });
+}
+
+function randomImage(array) {
+    var num = Math.floor(Math.random() * 4);
+    var thumbnail = array[num];
+    var swap;
+    setImage(thumbnail);
+    setCaption(thumbnail);
+    swap = array[0];
+    array[0] = array[num];
+    array[num] = swap
+
+}
+
+addListener(thumbsArray);
+randomImage(thumbsArray);
