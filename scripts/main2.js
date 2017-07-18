@@ -6,7 +6,9 @@ var thumbsNodeList;
 var thumbsArray;
 var detailImage;
 var detailText;
+var unorderedList;
 
+// Information formerly listed in HTML doc
 var thumbsArray2 = [
         { href: "img/otter1.jpg", 
           title: "Stayin' Alive",
@@ -39,10 +41,10 @@ var thumbsArray2 = [
         }
     ]
 
-var unorderedList = document.querySelector('.thumbnail-list');
+unorderedList = document.querySelector('.thumbnail-list');
 
 
-function createListItem (array) {
+function createListItem(array) {
     array.forEach(function (thumb) {
         var thumbList = document.createElement('li');
         thumbList.setAttribute('class', "thumbnail-item");
@@ -68,6 +70,7 @@ function createListItem (array) {
     })
 }
 
+// Loops through each object in thumbsArray2 -- creates list item for each, appends to body of doc
 createListItem(thumbsArray2);
 
 thumbsNodeList = document.querySelectorAll('a');
@@ -75,6 +78,7 @@ thumbsArray= getArray(thumbsNodeList);
 detailImage = document.querySelector(imageSelector);
 detailText = document.querySelector(titleSelector);
 
+// Makes nodeList into array
 function getArray(nodeList) {
     return [].slice.call(nodeList);
 }
@@ -87,7 +91,7 @@ function setCaption(thumb) {
     detailText.textContent = thumb.getAttribute('data-image-title');
 }
 
-
+// adds listener to each thumbnail, changes main image and caption when clicked
 function addListener(array) {
     array.forEach(function(thumb) {
         thumb.addEventListener("click", function(event) {
@@ -102,13 +106,21 @@ function randomImage(array) {
     var num = Math.floor(Math.random() * 4);
     var thumbnail = array[num];
     var swap;
+    var i = 0;
     setImage(thumbnail);
     setCaption(thumbnail);
-    swap = array[0];
-    array[0] = array[num];
-    array[num] = swap
-
 }
 
 addListener(thumbsArray);
 randomImage(thumbsArray);
+
+//  thumbsArray2.forEach(function(thumb2) {
+//         if (array[num].getAttribute('href') === thumb2.href) {
+//             swap = thumbsArray2[0];
+//             thumbsArray2[0] = thumbsArray2[i];
+//             thumbsArray2[i] = swap;
+//         }
+//         i++;
+//         console.log(i);
+//     })
+//     createListItem(thumbsArray2);
