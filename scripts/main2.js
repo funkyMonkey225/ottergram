@@ -109,18 +109,28 @@ function randomImage(array) {
     var i = 0;
     setImage(thumbnail);
     setCaption(thumbnail);
+    thumbsArray2.forEach(function(thumb2) {
+        if (array[num].getAttribute('href') === thumb2.href) {
+            swap = thumbsArray2[0];
+            thumbsArray2[0] = thumbsArray2[i];
+            thumbsArray2[i] = swap;
+        }
+        i++;
+        console.log(i);
+    })
+    createListItem(thumbsArray2);
 }
 
 addListener(thumbsArray);
 randomImage(thumbsArray);
 
-//  thumbsArray2.forEach(function(thumb2) {
-//         if (array[num].getAttribute('href') === thumb2.href) {
-//             swap = thumbsArray2[0];
-//             thumbsArray2[0] = thumbsArray2[i];
-//             thumbsArray2[i] = swap;
-//         }
-//         i++;
-//         console.log(i);
-//     })
-//     createListItem(thumbsArray2);
+ thumbsArray2.forEach(function(thumb2) {
+        if (array[num].getAttribute('href') === thumb2.href) {
+            swap = thumbsArray2[0];
+            thumbsArray2[0] = thumbsArray2[i];
+            thumbsArray2[i] = swap;
+        }
+        i++;
+        console.log(i);
+    })
+    createListItem(thumbsArray2);
