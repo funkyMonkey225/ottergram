@@ -1,2 +1,0 @@
-# ottergram
-instaOtter -- DOM practice
